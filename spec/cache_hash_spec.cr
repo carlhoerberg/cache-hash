@@ -167,12 +167,12 @@ describe CacheHash do
     it "returns a time if the kv pair is not stale" do
       hash = CacheHash(String).new(Time::Span.new(0, 0, 3))
 
-      t = Time.now
+      t = Time.utc
       hash.set "city_1", "Seattle"
       hash.time("city_1").class.should eq(Time)
 
       city_1_time = hash.time("city_1").not_nil!
-      (city_1_time > t && city_1_time < Time.now).should be_true
+      (city_1_time > t && city_1_time < Time.utc).should be_true
     end
 
     it "delete the kv pair if it is stale" do
